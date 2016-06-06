@@ -9,7 +9,7 @@ ENV GEAR_INPUT_DIR="${GEAR_BASE_DIR}/input" \
 
 
 RUN mkdir -p "${GEAR_INPUT_DIR}" \
-  && mkdir -p "${GEAR_OUTPUT_DIR}" \
+  && mkdir -p "${GEAR_OUTPUT_DIR}"
 
 
 COPY manifest.json "${GEAR_MANIFEST_FILE}"
