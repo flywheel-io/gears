@@ -4,6 +4,7 @@
 	"author": "Ryan Sanford <ryansanford@flywheel.io>",
 	"url": "https://flywheel.io/",
 	"source": "https://github.com/flywheel-io/gear-sample",
+	"license": "MIT",
 	"flywheel": "0",
 	"version":  "0.0.1",
 
