@@ -20,34 +20,74 @@ This indicates that it’s a flywheel gear and what version of the spec you’re
 All following references to folders are assumed to be relative to this folder.<br>
 For example, the `input` dir will be located at `/flywheel/v0/input`.
 
-### The info file
+### The manifest
 
-Inside the `v0` folder, include a file called `info.toml`.<br>
-This file must be in [toml syntax](https://github.com/toml-lang/toml#example) and have a few keys:
+Inside the `v0` folder, include a file called `manifest.json`.
+
+Here's an example manifest that takes two options and one dicom file:
+
+```json
+{
+	"name": "Example gear",
+	"url": "http://example.com",
+	"license": "apache",
+
+	"config": {
+		"speed": { "type": "number" },
+		"label": { "type": "string", "maxLength": 64 }
+	},
+
+	"inputs": {
+		"dicom": {
+			"base": "file",
+			"type": { "enum": [ "dicom" ] }
+		}
+	}
+}
+```
+
+First, we have a few basic properties:
 
 * name: A human-friendly name of the gear.
 * url: A URL that points to a project webpage.
 * license: Software license of the container
 
-An example `info.toml` file:
+Each key of `config` must be a [JSON schema](http://json-schema.org) snippet. The example has one option called "speed", which takes any number, and "label", which takes any string up to 64 characters. If you don't have any config options, it's okay to leave this section blank.
 
-```toml
-name    = "Example gear"
-url     = "http://example.com"
-license = "apache"
-```
+Each key of `inputs` specifies a file that the gear will consume. Each should specify `"base": "file"`, then add any further JSON schema constraints as you see fit. These will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only).
 
-### The input directory
+The example has named one input, called "dicom", and mandates that the file's type be dicom.<br>
+This governs how gears are automatically run, and provides hints to users when running manually.
+
+Note that for now, the manifests only support a single input.
+
+### The input directory and config
 
 When a gear is executed, an `input` folder will be created relative to the base folder.<br>
 If a gear has anything previously existing in the `input` folder it will be removed at launch time.
 
-This folder will contain any input file(s) that the gear should process.<br>
-The gear's run script (described later) is expected to discover the folder's contents and run accordingly.
+Inside that folder will be a `config.json` that looks very similar to your manifest:
 
-For example, in python one approach would be to use the [glob feature](https://docs.python.org/2/library/glob.html) to find an expected input file.<br>
-It’s okay to result in a permanent failure if the script can’t find the files it needs.<br>
-Keep in mind that the input files may be arbitrarily named.
+```json
+{
+	"config": {
+		"speed": "30",
+		"label": "Cool gear attempt"
+	},
+	"inputs": {
+		"dicom": {
+			"name": "my-data.dcm",
+			"type": "dicom"
+		}
+	}
+}
+```
+
+The config file holds the resultant configuration & file information for the current execution.
+A gear can parse this file to figure out what the options are set to and where the files are located.
+
+In this example, the input is called "dicom", and so will be in a folder inside `input` called `dicom`.
+The full path would be: `/flywheel/v0/input/dicom/my-data.dcm`.
 
 ### The output directory
 

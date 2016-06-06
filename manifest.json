@@ -1,0 +1,20 @@
+{
+	"name":     "flywheel-gear-sample",
+	"description": "Sample gear to demonstrate a simple use case of outputting the name of each input file.",
+	"author": "Ryan Sanford <ryansanford@flywheel.io>",
+	"url": "https://flywheel.io/",
+	"source": "https://github.com/flywheel-io/gear-sample",
+	"license": "MIT",
+	"flywheel": "0",
+	"version":  "0.0.1",
+
+	"config": {
+	},
+
+	"inputs": {
+		"dicom": {
+			"base": "file",
+			"type": { "enum": [ "dicom" ] }
+		}
+	}
+}
