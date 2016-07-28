@@ -7,7 +7,7 @@ This document describes the structure and lifecycle of a Flywheel Gear.
 A flywheel gear is simply a tarball of a container with some special files inside it.<br>
 These can be created from and used by many common tools such as Docker!
 
-## The base directory
+## The base folder
 
 To be a flywheel gear, you must have a specific folder in the container: `/flywheel/v0`.
 All following references to folders are assumed to be relative to this folder.
@@ -74,14 +74,14 @@ Each key of `inputs` specifies a file that the gear will consume. Each should sp
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
-### The input directory
+### The input folder
 
 When a gear is executed, an `input` folder will be created relative to the base folder. If a gear has anything previously existing in the `input` folder it will be removed at launch time.
 
 In this example, the input is called "dicom", and so will be in a folder inside `input` called `dicom`.
 The full path would be, for example: `/flywheel/v0/input/dicom/my-data.dcm`.
 
-### The output directory
+### The output folder
 
 When a gear is executed, an `output` folder will be created relative to the base folder. If a gear has anything previously existing in the `output` folder it will be removed at launch time.
 
@@ -123,7 +123,7 @@ As you might expect, gears cannot produce "normal" files called `.metadata.json`
 
 A gear must include a file called `run` relative to the base folder. This file must be marked as executable (`chmod +x run`). It can be a simple bash script, or whatever else that you want.
 
-`run` is called from its directory, with no arguments, and a (mostly) empty environment. Notably, the `PATH` is set to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` for convenience. If you need any arguments or variables, add them in your script.
+`run` is called from its folder, with no arguments, and a (mostly) empty environment. Notably, the `PATH` is set to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` for convenience. If you need any arguments or variables, add them in your script.
 
 The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
 
