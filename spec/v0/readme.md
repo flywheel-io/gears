@@ -9,8 +9,8 @@ These can be created from and used by many common tools such as Docker!
 
 ## The base directory
 
-To be a flywheel gear, you must have a specific folder in the container: `/flywheel/v0`.<br>
-This indicates that it’s a flywheel gear and what version of the spec you’re using.
+To be a flywheel gear, you must have a specific folder in the container: `/flywheel/v0`.
+This indicates that it’s a flywheel gear.
 
 All following references to folders are assumed to be relative to this folder.<br>
 For example, the `input` dir will be located at `/flywheel/v0/input`.
