@@ -10,10 +10,7 @@ These can be created from and used by many common tools such as Docker!
 ## The base directory
 
 To be a flywheel gear, you must have a specific folder in the container: `/flywheel/v0`.
-This indicates that it’s a flywheel gear.
-
-All following references to folders are assumed to be relative to this folder.<br>
-For example, the `input` dir will be located at `/flywheel/v0/input`.
+This indicates that it’s a flywheel gear. All following references to folders are assumed to be relative to this folder.
 
 ### The manifest
 
@@ -79,18 +76,16 @@ The example has named one input, called "dicom", and requests that the file's ty
 
 ### The input directory
 
-When a gear is executed, an `input` folder will be created relative to the base folder.<br>
-If a gear has anything previously existing in the `input` folder it will be removed at launch time.
+When a gear is executed, an `input` folder will be created relative to the base folder. If a gear has anything previously existing in the `input` folder it will be removed at launch time.
 
 In this example, the input is called "dicom", and so will be in a folder inside `input` called `dicom`.
 The full path would be, for example: `/flywheel/v0/input/dicom/my-data.dcm`.
 
 ### The output directory
 
-When a gear is executed, an `output` folder will be created relative to the base folder.<br>
-If a gear has anything previously existing in the `output` folder it will be removed at launch time.
+When a gear is executed, an `output` folder will be created relative to the base folder. If a gear has anything previously existing in the `output` folder it will be removed at launch time.
 
-The gear should place any files that it wants saved into the `output` folder - and only those files.<br>
+The gear should place any files that it wants saved into the `output` folder - and only those files.
 Anything in the `output` folder when the gear is complete will be saved as a result.
 
 If you don’t want results saved, it’s okay to leave this folder empty.<br>
@@ -126,17 +121,11 @@ As you might expect, gears cannot produce "normal" files called `.metadata.json`
 
 ### The run script
 
-A gear must include a file called `run` relative to the base folder.<br>
-This file must be marked as executable (`chmod +x run`).<br>
-It can be a simple bash script, or whatever else that you want.
+A gear must include a file called `run` relative to the base folder. This file must be marked as executable (`chmod +x run`). It can be a simple bash script, or whatever else that you want.
 
-`run` is called from its directory, with no arguments, and a (mostly) empty environment.<br>
-Notably, the `PATH` is set to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` for convenience.<br>
-If you need any arguments or variables, add them in your script.
+`run` is called from its directory, with no arguments, and a (mostly) empty environment. Notably, the `PATH` is set to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` for convenience. If you need any arguments or variables, add them in your script.
 
-The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do.<br>
-On success or permanent failure, exit zero. On transient failure, exit non-zero.<br>
-This is the only feedback mechanism you have at the moment.
+The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
 
 ### Networking
 
