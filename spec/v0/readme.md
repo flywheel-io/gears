@@ -10,7 +10,7 @@ These can be created from and used by many common tools such as Docker!
 ## The base directory
 
 To be a flywheel gear, you must have a specific folder in the container: `/flywheel/v0`.
-This indicates that it’s a flywheel gear. All following references to folders are assumed to be relative to this folder.
+All following references to folders are assumed to be relative to this folder.
 
 ### The manifest
 
@@ -129,7 +129,7 @@ The run script is the only entry point used for the gear and must accomplish eve
 
 ### Networking
 
-At the current time, basic outbound networking may be available to the gear. This is not necessarily guaranteed, and may vary depending on your installation's setup. Further, it is very likely that this feature will become opt-in in a future version of the spec.
+At the current time, basic outbound networking may be available to the gear. This is not necessarily guaranteed, and may vary depending on your installation's setup. It is likely that this feature will become opt-in in a future version of the spec.
 
 Be sure to get in touch with us regarding your networking needs - Matlab license checks, for example.<br>
 There are no current plans to allow inbound networking.
