@@ -133,3 +133,7 @@ At the current time, basic outbound networking may be available to the gear. Thi
 
 Be sure to get in touch with us regarding your networking needs - Matlab license checks, for example.<br>
 There are no current plans to allow inbound networking.
+
+### Contact
+
+Please don't hesitate to contact us with questions or comments about the spec at support@flywheel.io !
