@@ -12,8 +12,8 @@ RUN mkdir -p "${GEAR_INPUT_DIR}" \
   && mkdir -p "${GEAR_OUTPUT_DIR}"
 
 
-COPY sample-gear/manifest.json "${GEAR_MANIFEST_FILE}"
-COPY sample-gear/entrypoint.sh "${GEAR_ENTRYPOINT}"
+COPY gear-sample/manifest.json "${GEAR_MANIFEST_FILE}"
+COPY gear-sample/entrypoint.sh "${GEAR_ENTRYPOINT}"
 
 
 WORKDIR ${GEAR_BASE_DIR}
