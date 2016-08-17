@@ -54,7 +54,7 @@ Note, the `// comments` are not JSON syntax and cannot be included in a real man
 			// (Optional) json-schema syntax to provide further guidance
 			"type": "integer",
 			"minimum": 0,
-			"maximum": 3,
+			"maximum": 3
 		}
 	},
 

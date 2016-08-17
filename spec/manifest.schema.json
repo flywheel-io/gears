@@ -51,7 +51,7 @@
 				"required": ["base"],
 				"additionalProperties": {
 					"$ref": "#/definitions/directive"
-				},
+				}
 			},
 			"description": "Schema snippets describing the inputs this gear consumes."
 		},
