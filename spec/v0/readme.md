@@ -39,28 +39,35 @@ Note, the `// comments` are not JSON syntax and cannot be included in a real man
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
 	"license": "Apache-2.0",
 
-	// Where to go to learn more about the gear.
+	// Where to go to learn more about the gear
 	"url":     "http://example.com",
 
 	// Where to go for the source code, if applicable. Can be the same as the above url.
 	"source":  "http://example.com/code",
 
-
-	// TBA, leave empty for now
+	// Options that the gear can use
 	"config": {
 
+		// A name for this option to show in the user interface
+		"speed": {
+
+			// (Optional) json-schema syntax to provide further guidance
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 3,
+		}
 	},
 
-	// inputs (files) that the gear consumes
+	// Inputs (files) that the gear consumes
 	"inputs": {
 
-		// a name for this input to show in the user interface
+		// A name for this input to show in the user interface
 		"dicom": {
 
-			// specifies that the input is a single file. for now, it's the only type.
+			// Specifies that the input is a single file. for now, it's the only type.
 			"base": "file",
 
-			// (optional) json-schema syntax to provide further guidance
+			// (Optional) json-schema syntax to provide further guidance
 			"type": { "enum": [ "dicom" ] }
 
 		}
