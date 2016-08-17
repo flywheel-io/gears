@@ -25,6 +25,9 @@
 		},
 		"config": {
 			"type": "object",
+			"additionalProperties": {
+				"$ref": "#/definitions/directive"
+			},
 			"description": "Schema snippets desribing the options this gear consumes. Not currently processed."
 		},
 		"custom": {
