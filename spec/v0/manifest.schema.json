@@ -63,7 +63,7 @@
 		"name": {
 			"type": "string",
 			"maxLength": 100,
-			"pattern": "^[a-z0-9\-]+$",
+			"pattern": "^[a-z0-9\\-]+$",
 			"description": "The identification of this gear."
 		},
 		"source": {
