@@ -9,6 +9,7 @@ import json
 import os
 import sys
 
+import gear_tools
 
 # Normal validation can happen via jsonschema. For validating a schema itself, Draft4Validator is used.
 import jsonschema
@@ -108,6 +109,11 @@ def derive_invocation_schema(manifest):
 
 			# Require the key be preset.
 			result['properties'][kind]['required'].append(key)
+
+		# After handling each key, remove required array if none are present.
+		# Required by jsonschema (minItems 1).
+		if len(result['properties'][kind]['required']) == 0:
+			result['properties'][kind].pop('required', None)
 
 	# Important: check our work - the result must be a valid schema.
 	Draft4Validator.check_schema(result)
