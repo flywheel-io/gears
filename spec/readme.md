@@ -77,9 +77,13 @@ Note, the `// comments` are not JSON syntax and cannot be included in a real man
 
 All keys listed are required unless marked otherwise. There are a few restrictions on field length and format; if you are familiar with [JSON schema](http://json-schema.org) you can look at our manifest schema [here](manifest.schema.json).
 
+#### Manifest inputs
+
 Each key of `inputs` specifies a file that the gear will consume. Each should specify `"base": "file"`, then add any further JSON schema constraints as you see fit. These will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). The constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice.
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
+
+#### Manifest configuration
 
 Each key of `config` specifies a configuration option. Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
 
