@@ -10,17 +10,11 @@
 			"enum": [ "file" ],
 			"description": "The type of gear input. Currently only supports a file."
 		},
-		"input": {
+		"directive": {
 			"oneOf": [
 				{"$ref": "http://json-schema.org/draft-04/schema"}
 			],
-			"properties": {
-				"base": {
-					"$ref": "#/definitions/input-base"
-				}
-			},
-			"required": ["base"],
-			"description": "A schema snippet describing an input."
+			"description": "A schema directive."
 		}
 	},
 	"properties": {
@@ -31,6 +25,9 @@
 		},
 		"config": {
 			"type": "object",
+			"additionalProperties": {
+				"$ref": "#/definitions/directive"
+			},
 			"description": "Schema snippets desribing the options this gear consumes. Not currently processed."
 		},
 		"custom": {
@@ -43,8 +40,18 @@
 			"description": "A brief description of the gear's purpose. Ideally 1-4 sentances."
 		},
 		"inputs": {
+			"type": "object",
 			"additionalProperties": {
-				"$ref": "#/definitions/input"
+				"type": "object",
+				"properties": {
+					"base": {
+						"$ref": "#/definitions/input-base"
+					}
+				},
+				"required": ["base"],
+				"additionalProperties": {
+					"$ref": "#/definitions/directive"
+				}
 			},
 			"description": "Schema snippets describing the inputs this gear consumes."
 		},
@@ -63,7 +70,7 @@
 		"name": {
 			"type": "string",
 			"maxLength": 100,
-			"pattern": "^[a-z0-9\-]+$",
+			"pattern": "^[a-z0-9\\-]+$",
 			"description": "The identification of this gear."
 		},
 		"source": {

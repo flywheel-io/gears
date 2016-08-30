@@ -1,0 +1,10 @@
+{
+	"config": {
+		"speed": 3
+	},
+	"inputs": {
+		"dicom": {
+			"type": "dicom"
+		}
+	}
+}

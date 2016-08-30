@@ -1,8 +1,8 @@
-# Flywheel Gear Spec (v0)
+# Flywheel Gear Spec (v0.1)
 
 This document describes the structure and lifecycle of a Flywheel Gear.
 
-## Structure & behaviour of a gear
+## Structure & behavior of a gear
 
 A flywheel gear is simply a tarball of a container with some special files inside it.<br>
 These can be created from and used by many common tools such as Docker!
@@ -39,28 +39,35 @@ Note, the `// comments` are not JSON syntax and cannot be included in a real man
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
 	"license": "Apache-2.0",
 
-	// Where to go to learn more about the gear.
+	// Where to go to learn more about the gear
 	"url":     "http://example.com",
 
 	// Where to go for the source code, if applicable. Can be the same as the above url.
 	"source":  "http://example.com/code",
 
-
-	// TBA, leave empty for now
+	// Options that the gear can use
 	"config": {
 
+		// A name for this option to show in the user interface
+		"speed": {
+
+			// (Optional) json-schema syntax to provide further guidance
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 3
+		}
 	},
 
-	// inputs (files) that the gear consumes
+	// Inputs (files) that the gear consumes
 	"inputs": {
 
-		// a name for this input to show in the user interface
+		// A name for this input to show in the user interface
 		"dicom": {
 
-			// specifies that the input is a single file. for now, it's the only type.
+			// Specifies that the input is a single file. for now, it's the only type.
 			"base": "file",
 
-			// (optional) json-schema syntax to provide further guidance
+			// (Optional) json-schema syntax to provide further guidance
 			"type": { "enum": [ "dicom" ] }
 
 		}
@@ -74,12 +81,28 @@ Each key of `inputs` specifies a file that the gear will consume. Each should sp
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
+Each key of `config` specifies a configuration option. Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
+
+The example has named one config option, called "speed", which must be an integer between zero and three.
+
 ### The input folder
 
 When a gear is executed, an `input` folder will be created relative to the base folder. If a gear has anything previously existing in the `input` folder it will be removed at launch time.
 
 In this example, the input is called "dicom", and so will be in a folder inside `input` called `dicom`.
 The full path would be, for example: `/flywheel/v0/input/dicom/my-data.dcm`.
+
+### The input configuration
+
+If your gear has specified configuration, inside the `input` folder a `config.json` file will be provided with any settings the user has provided. For example, if your gear uses the example manifest above, and the user sets `speed` to 2, you'd get a file like the following:
+
+```javascript
+{
+	"speed": 2
+}
+```
+
+Each configuration key will have been checked server-side against any constraints you specified, so you can be assured that your gear will be provided valid values. In a future revision, this file will also hold information about the gear's input files.
 
 ### The output folder
 
