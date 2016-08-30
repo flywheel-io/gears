@@ -1,8 +1,8 @@
-# Flywheel Gear Spec (v0)
+# Flywheel Gear Spec (v0.1)
 
 This document describes the structure and lifecycle of a Flywheel Gear.
 
-## Structure & behaviour of a gear
+## Structure & behavior of a gear
 
 A flywheel gear is simply a tarball of a container with some special files inside it.<br>
 These can be created from and used by many common tools such as Docker!
@@ -81,12 +81,28 @@ Each key of `inputs` specifies a file that the gear will consume. Each should sp
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
+Each key of `config` specifies a configuration option. Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
+
+The example has named one config option, called "speed", which must be an integer between zero and three.
+
 ### The input folder
 
 When a gear is executed, an `input` folder will be created relative to the base folder. If a gear has anything previously existing in the `input` folder it will be removed at launch time.
 
 In this example, the input is called "dicom", and so will be in a folder inside `input` called `dicom`.
 The full path would be, for example: `/flywheel/v0/input/dicom/my-data.dcm`.
+
+### The input configuration
+
+If your gear has specified configuration, inside the `input` folder a `config.json` file will be provided with any settings the user has provided. For example, if your gear uses the example manifest above, and the user sets `speed` to 2, you'd get a file like the following:
+
+```javascript
+{
+	"speed": 2
+}
+```
+
+Each configuration key will have been checked server-side against any constraints you specified, so you can be assured that your gear will be provided valid values. In a future revision, this file will also hold information about the gear's input files.
 
 ### The output folder
 
