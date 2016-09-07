@@ -1,3 +1,3 @@
 # Flywheel Gears
 
-This repository holds a [sample gear](sample-gear) and the latest version of the [gear spec](spec).
+This repository holds a [example gear](example-gear) and the latest version of the [gear spec](spec).
