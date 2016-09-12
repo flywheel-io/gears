@@ -119,7 +119,6 @@ def derive_invocation_schema(manifest):
 	Draft4Validator.check_schema(result)
 	return result
 
-
 def isolate_file_invocation(invocation, input_name):
 	"""
 	Given an invocation schema, isolate just a specific file.
@@ -127,7 +126,8 @@ def isolate_file_invocation(invocation, input_name):
 	Useful to validate a single input.
 	"""
 
-	fis = invocation['properties']['inputs']['properties'][input_name]
+	inv = copy.deepcopy(invocation)
+	fis = inv['properties']['inputs']['properties'][input_name]
 
 	fis['title']   = 'Input invocation manifest for ' + input_name
 	fis['$schema'] = 'http://json-schema.org/draft-04/schema#'
@@ -137,6 +137,23 @@ def isolate_file_invocation(invocation, input_name):
 	Draft4Validator.check_schema(fis)
 	return fis
 
+def isolate_config_invocation(invocation):
+	"""
+	Given an invocation schema, isolate just the config portion.
+
+	Useful to validate configuration options separately from files.
+	"""
+
+	inv = copy.deepcopy(invocation)
+	fis = inv['properties']['config']
+
+	fis['title']   = 'Config invocation manifest'
+	fis['$schema'] = 'http://json-schema.org/draft-04/schema#'
+	fis['type']    = 'object'
+
+	# Important: check our work - the result must be a valid schema.
+	Draft4Validator.check_schema(fis)
+	return fis
 
 def validate_invocation(manifest, invocation):
 	"""
