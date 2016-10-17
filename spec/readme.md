@@ -36,6 +36,9 @@ Note, the `// comments` are not JSON syntax and cannot be included in a real man
 	// The author of this gear.
 	"author":  "Flywheel",
 
+	// (optional) the maintainer - can be used to distinguish the algorithm author from the gear maintainer, if distinct.
+	"maintainer":  "Nathaniel Kofalt",
+
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
 	"license": "Apache-2.0",
 

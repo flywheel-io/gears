@@ -23,6 +23,11 @@
 			"maxLength": 100,
 			"description": "The author of this gear."
 		},
+		"maintainer": {
+			"type": "string",
+			"maxLength": 100,
+			"description": "(optional) The maintainer of this gear. Can be used to distinguish the algorithm author from the gear maintainer."
+		},
 		"config": {
 			"type": "object",
 			"additionalProperties": {
