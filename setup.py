@@ -10,5 +10,8 @@ setup(
 
     packages = ['gears'],
     package_data = {'gears': ['../spec/manifest.schema.json']},
-    install_requires = ['jsonschema', 'rfc3987'],
+    install_requires = [
+        'jsonschema >= 2.5.1',
+        'rfc3987 >= 1.3.7'
+    ],
 )
