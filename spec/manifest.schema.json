@@ -51,6 +51,10 @@
 				"properties": {
 					"base": {
 						"$ref": "#/definitions/input-base"
+					},
+					"description": {
+						"type": "string",
+						"description": "Hackaround for description not technically being a schema directive"
 					}
 				},
 				"required": ["base"],
