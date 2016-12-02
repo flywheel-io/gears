@@ -95,9 +95,10 @@ def derive_invocation_schema(manifest):
 	# Copy over constraints from manifest
 	for kind in ['config', 'inputs']:
 		for key in manifest[kind]:
-			# Copy constraints, removing 'base' keyword which is not a constraint
+			# Copy constraints, removing 'base' and 'description' keywords which are not constraints
 			val = copy.deepcopy(manifest[kind][key])
 			val.pop('base', None)
+			val.pop('description', None)
 
 			# The config map holds scalars, while the inputs map holds objects.
 			if kind == 'config':
