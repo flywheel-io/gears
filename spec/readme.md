@@ -4,13 +4,15 @@ This document describes the structure and lifecycle of a Flywheel Gear.
 
 ## Structure & behavior of a gear
 
-A flywheel gear is simply a tarball of a container with some special files inside it.<br>
-These can be created from and used by many common tools such as Docker!
+A Flywheel gear is a tar file (.tar) of a container; the container must include certain special files.<br>
+This tar file can be created from most common container tools (e.g., Docker).
 
 ## The base folder
 
-To be a flywheel gear, you must have a specific folder in the container: `/flywheel/v0`.
-All following references to folders are assumed to be relative to this folder.
+To be a Flywheel gear, the container in the tar file must include a specific folder : `/flywheel/v0`.
+All following references to folders are relative to this folder.
+
+The `/flywheel/v0` directory must contain two files:  `manifest.json` and `run`.
 
 ### The manifest
 
