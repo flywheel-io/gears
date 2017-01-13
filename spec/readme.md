@@ -1,26 +1,29 @@
 # Flywheel Gear Spec (v0.1)
 
-This document describes the structure and lifecycle of a Flywheel Gear.
+This document describes the structure of a Flywheel Gear.
 
 ## Structure & behavior of a gear
 
-A Flywheel gear is a tar file (.tar) of a container; the container must include certain special files.<br>
+A Flywheel gear is a tar file (.tar) of a container; the container must include a specific directory that contains two special files.<br>
 This tar file can be created from most common container tools (e.g., Docker).
 
 ## The base folder
 
-To be a Flywheel gear, the container in the tar file must include a specific folder : `/flywheel/v0`.
+To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.
 All following references to folders are relative to this folder.
 
-The `/flywheel/v0` directory must contain two files:  `manifest.json` and `run`.
+The `/flywheel/v0` folder must contain two specific files
 
-### The manifest
+   * `manifest.json`   - Describes critical properties of how the gear computes. 
+   * `run`             - Describes how to execute the algorithm in the gear.  
+   
+The contents of these files are described here.
 
-Inside the `v0` folder, include a file called `manifest.json`.
+## The manifest
 
-Here's an example manifest that takes a one dicom file.<br>
-Note, the `// comments` are not JSON syntax and cannot be included in a real manifest file:
+Here's an example manifest.json that specifies a Flywheel gear that reads one dicom file as input and specifies one configuration parameter. The keys listed in this example are all required, unless marked otherwise. For other restrictions and required fields see [the manifest.json schema](manifest.schema.json).  Follow [this link](http://json-schema.org) to learn more about JSON schema<br>
 
+Note, the `// comments` shown below are not JSON syntax and cannot be included in a real manifest file.
 ```javascript
 {
 	// Computer-friendly name; unique for your organization
@@ -80,15 +83,15 @@ Note, the `// comments` are not JSON syntax and cannot be included in a real man
 }
 ```
 
-All keys listed are required unless marked otherwise. There are a few restrictions on field length and format; if you are familiar with [JSON schema](http://json-schema.org) you can look at our manifest schema [here](manifest.schema.json).
+There are a few restrictions on field length and format; if you are familiar with [JSON schema](http://json-schema.org) you can look at our manifest schema [here](manifest.schema.json).
 
-#### Manifest inputs
+### Manifest inputs
 
 Each key of `inputs` specifies a file that the gear will consume. Each should specify `"base": "file"`, then add any further JSON schema constraints as you see fit. These will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). The constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice.
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
-#### Manifest configuration
+### Manifest configuration
 
 Each key of `config` specifies a configuration option. Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
 
@@ -151,13 +154,19 @@ If you are curious about the typical file types, you can find a list of them [he
 
 As you might expect, gears cannot produce "normal" files called `.metadata.json`, and might cause the gear to fail if the file is improperly formed.
 
-### The run script
+## The run script
 
 A gear must include a file called `run` relative to the base folder. This file must be marked as executable (`chmod +x run`). It can be a simple bash script, or whatever else that you want.
 
 `run` is called from its folder, with no arguments, and a (mostly) empty environment. Notably, the `PATH` is set to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` for convenience. If you need any arguments or variables, add them in your script.
 
 The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
+
+## Important implementation notes
+
+### Relationship to conventional Docker executation
+
+### Setting the environment variables
 
 ### Networking
 
@@ -166,6 +175,6 @@ At the current time, basic outbound networking may be available to the gear. Thi
 Be sure to get in touch with us regarding your networking needs - Matlab license checks, for example.<br>
 There are no current plans to allow inbound networking.
 
-### Contact
+## Contact
 
 Please don't hesitate to contact us with questions or comments about the spec at support@flywheel.io !
