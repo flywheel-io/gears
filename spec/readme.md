@@ -4,7 +4,8 @@ This document describes the structure of a Flywheel Gear.
 
 ## Structure & behavior of a gear
 
-A Flywheel gear is a tar file (.tar) of a container; the container must include a specific directory that contains two special files.<br>
+A Flywheel gear is a tar file (.tar) of a container; the container must include a specific directory that contains two special files. 
+
 This tar file can be created from most common container tools (e.g., Docker).
 
 ## The base folder
@@ -69,7 +70,7 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	// Inputs (files) that the gear consumes
 	"inputs": {
 
-		// A name for this input to show in the user interface
+		// A label - describes one of the inputs.  It is used by the user interface and by the run script
 		"dicom": {
 
 			// Specifies that the input is a single file. for now, it's the only type.
@@ -83,11 +84,11 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 }
 ```
 
-There are a few restrictions on field length and format; if you are familiar with [JSON schema](http://json-schema.org) you can look at our manifest schema [here](manifest.schema.json).
-
 ### Manifest inputs
 
-Each key of `inputs` specifies a file that the gear will consume. Each should specify `"base": "file"`, then add any further JSON schema constraints as you see fit. These will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). The constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice.
+Each key of `inputs` specifies an input to the gear. At this point, the inputs are always files and the `"base": "file"` is part of the specification. 
+
+Further constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice. In the example above we add a constraint describing the `type` of file. File types will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). 
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
@@ -156,17 +157,21 @@ As you might expect, gears cannot produce "normal" files called `.metadata.json`
 
 ## The run script
 
-A gear must include a file called `run` relative to the base folder. This file must be marked as executable (`chmod +x run`). It can be a simple bash script, or whatever else that you want.
-
-`run` is called from its folder, with no arguments, and a (mostly) empty environment. Notably, the `PATH` is set to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` for convenience. If you need any arguments or variables, add them in your script.
+The fun file is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
 
 The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
 
-## Important implementation notes
+### The environment for the run script
 
-### Relationship to conventional Docker executation
+An important consideration is the environment when the `run` command is executed. The default environment variables are the same as those in the root file system container. 
 
-### Setting the environment variables
+The default path is:
+
+    `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
+
+At this time, the environment and path variables specified in the Docker container are not availble to the `run` executable.  You should specify them within the script.  We typically specify the path and environment variables in a .bashrc file and source that file at the beginning of the execution.
+
+The file is executed with no arguments. You must specify the inputs to the executables in the `run`, such as the input file names or flags.  Also, you must specify any `$PATH` folders or environment variables that are not in the base container.
 
 ### Networking
 
