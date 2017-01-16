@@ -9,8 +9,6 @@ import json
 import os
 import sys
 
-import gear_tools
-
 # Normal validation can happen via jsonschema. For validating a schema itself, Draft4Validator is used.
 import jsonschema
 from jsonschema import Draft4Validator
