@@ -157,7 +157,7 @@ As you might expect, gears cannot produce "normal" files called `.metadata.json`
 
 ## The run script
 
-The fun file is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
+The `run` file is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
 
 The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
 
@@ -169,7 +169,7 @@ The default path is:
 
     `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
 
-At this time, the environment and path variables specified in the Docker container are not availble to the `run` executable.  You should specify them within the script.  We typically specify the path and environment variables in a .bashrc file and source that file at the beginning of the execution.
+At this time, the environment and path variables specified in the Docker container are not availble to the `run` executable.  You should specify them within the script.  We typically specify the path and environment variables in a `.bashrc` file and source that file at the beginning of the execution.
 
 The file is executed with no arguments. You must specify the inputs to the executables in the `run`, such as the input file names or flags.  Also, you must specify any `$PATH` folders or environment variables that are not in the base container.
 
