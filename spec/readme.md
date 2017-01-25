@@ -174,7 +174,9 @@ The run script is the only entry point used for the gear and must accomplish eve
 An important consideration is the environment when the `run` command is executed.
 The command will be executed in the folder containing it (`/flywheel/v0`), and with no environment variables save the `PATH`:
 
-    `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
+````
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+````
 
 Any required environment and path variables should be specified within the script. This can be important if, for example, you're producing a gear from a Dockerfile, as the variables there will not transfer over. We typically specify the path and environment variables in a `.bashrc` file, and source that file at the beginning of the `run` script.
 
