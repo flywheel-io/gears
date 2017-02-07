@@ -10,7 +10,7 @@ This tar file can be created from most common container tools (e.g., Docker).
 
 ## The base folder
 
-To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.
+To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.<br>
 All following references to folders are relative to this folder.
 
 The `/flywheel/v0` folder must contain two specific files
@@ -22,7 +22,10 @@ The contents of these files are described here.
 
 ## The manifest
 
-Here's an example manifest.json that specifies a Flywheel gear that reads one dicom file as input and specifies one configuration parameter. The keys listed in this example are all required, unless marked otherwise. For other restrictions and required fields see [the manifest.json schema](manifest.schema.json).  Follow [this link](http://json-schema.org) to learn more about JSON schema<br>
+Here's an example manifest.json that specifies a Flywheel gear which reads one dicom file as input and specifies one configuration parameter. The keys listed in this example are all required, unless marked otherwise.
+
+For other restrictions and required fields, you can view our [manifest schema](manifest.schema.json).<br>
+This document is a [JSON schema](http://json-schema.org), which allows for automatic validation of structured documents. 
 
 Note, the `// comments` shown below are not JSON syntax and cannot be included in a real manifest file.
 ```javascript
@@ -39,10 +42,11 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	// Human-friendly version identifier
 	"version": "1.0",
 
-	// The author of this gear.
+	// The author of this gear or algorithm.
 	"author":  "Flywheel",
 
-	// (optional) the maintainer - can be used to distinguish the algorithm author from the gear maintainer, if distinct.
+	// (Optional) the maintainer, which may be distinct from the algorithm author.
+	// Can be the same as the author field if both roles were filled by the same individual.
 	"maintainer":  "Nathaniel Kofalt",
 
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
@@ -70,10 +74,10 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	// Inputs (files) that the gear consumes
 	"inputs": {
 
-		// A label - describes one of the inputs.  It is used by the user interface and by the run script
+		// A label - describes one of the inputs. Used by the user interface and by the run script.
 		"dicom": {
 
-			// Specifies that the input is a single file. for now, it's the only type.
+			// Specifies that the input is a single file. For now, it's the only type.
 			"base": "file",
 
 			// (Optional) json-schema syntax to provide further guidance
@@ -86,15 +90,18 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 
 ### Manifest inputs
 
-Each key of `inputs` specifies an input to the gear. At this point, the inputs are always files and the `"base": "file"` is part of the specification. 
+Each key of `inputs` specifies an input to the gear.<br>
+At this point, the inputs are always files and the `"base": "file"` is part of the specification. 
 
-Further constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice. In the example above we add a constraint describing the `type` of file. File types will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). 
+Further constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice. In the example above, we add a constraint describing the `type` of file. File types will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). 
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
 ### Manifest configuration
 
-Each key of `config` specifies a configuration option. Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
+Each key of `config` specifies a configuration option.
+
+Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
 
 The example has named one config option, called "speed", which must be an integer between zero and three.
 
@@ -157,21 +164,23 @@ As you might expect, gears cannot produce "normal" files called `.metadata.json`
 
 ## The run script
 
-The `run` file is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
+The `run` file is `/flywheel/v0/run`.<br>
+The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
 
 The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
 
 ### The environment for the run script
 
-An important consideration is the environment when the `run` command is executed. The default environment variables are the same as those in the root file system container. 
+An important consideration is the environment when the `run` command is executed.
+The command will be executed in the folder containing it (`/flywheel/v0`), and with no environment variables save the `PATH`:
 
-The default path is:
+````
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+````
 
-    `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
+Any required environment and path variables should be specified within the script. This can be important if, for example, you're producing a gear from a Dockerfile, as the variables there will not transfer over. We typically specify the path and environment variables in a `.bashrc` file, and source that file at the beginning of the `run` script.
 
-At this time, the environment and path variables specified in the Docker container are not availble to the `run` executable.  You should specify them within the script.  We typically specify the path and environment variables in a `.bashrc` file and source that file at the beginning of the execution.
-
-The file is executed with no arguments. You must specify the inputs to the executables in the `run`, such as the input file names or flags.  Also, you must specify any `$PATH` folders or environment variables that are not in the base container.
+The file is also executed with no arguments. You must specify the inputs to the executables in the `run` script, such as the input file names or flags.
 
 ### Networking
 
