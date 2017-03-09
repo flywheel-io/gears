@@ -5,11 +5,6 @@
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"type": "object",
 	"definitions": {
-		"input-base": {
-			"type": "string",
-			"enum": [ "file" ],
-			"description": "The type of gear input. Currently only supports a file."
-		},
 		"directive": {
 			"oneOf": [
 				{"$ref": "http://json-schema.org/draft-04/schema"}
@@ -50,11 +45,17 @@
 				"type": "object",
 				"properties": {
 					"base": {
-						"$ref": "#/definitions/input-base"
+						"type": "string",
+						"enum": [ "file" ],
+						"description": "The type of gear input. Currently only supports a file."
 					},
 					"description": {
 						"type": "string",
 						"description": "Hackaround for description not technically being a schema directive"
+					},
+					"optional": {
+						"type": "boolean",
+						"description": "Allow the gear to mark an input file as optional."
 					}
 				},
 				"required": ["base"],
