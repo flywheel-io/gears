@@ -97,6 +97,7 @@ def derive_invocation_schema(manifest):
 			val = copy.deepcopy(manifest[kind][key])
 			val.pop('base', None)
 			val.pop('description', None)
+			optional = val.pop('optional', False)
 
 			# The config map holds scalars, while the inputs map holds objects.
 			if kind == 'config':
@@ -106,8 +107,9 @@ def derive_invocation_schema(manifest):
 				result['properties'][kind]['properties'][key]['properties'] = val
 				result['properties'][kind]['properties'][key]['type'] = 'object'
 
-			# Require the key be preset.
-			result['properties'][kind]['required'].append(key)
+			# Require the key be present unless optional flag is set.
+			if not optional:
+				result['properties'][kind]['required'].append(key)
 
 		# After handling each key, remove required array if none are present.
 		# Required by jsonschema (minItems 1).
