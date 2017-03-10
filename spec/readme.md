@@ -114,11 +114,13 @@ The full path would be, for example: `/flywheel/v0/input/dicom/my-data.dcm`.
 
 ### The input configuration
 
-If your gear has specified configuration, inside the `input` folder a `config.json` file will be provided with any settings the user has provided. For example, if your gear uses the example manifest above, and the user sets `speed` to 2, you'd get a file like the following:
+If your gear has specified configuration, inside the `/flywheel/v0` folder a `config.json` file will be provided with any settings the user has provided. For example, if your gear uses the example manifest above, and the user sets `speed` to 2, you'd get a file like the following:
 
 ```javascript
 {
-	"speed": 2
+	"config": {
+		"speed": 2
+	}
 }
 ```
 
