@@ -1,10 +1,10 @@
-# Flywheel Gear Spec (v0.1)
+# Flywheel Gear Spec (v0.1.1)
 
 This document describes the structure of a Flywheel Gear.
 
 ## Structure & behavior of a gear
 
-A Flywheel gear is a tar file (.tar) of a container; the container must include a specific directory that contains two special files. 
+A Flywheel gear is a tar file (.tar) of a container; the container must include a specific directory that contains two special files.
 
 This tar file can be created from most common container tools (e.g., Docker).
 
@@ -15,9 +15,9 @@ All following references to folders are relative to this folder.
 
 The `/flywheel/v0` folder must contain two specific files
 
-   * `manifest.json`   - Describes critical properties of how the gear computes. 
-   * `run`             - Describes how to execute the algorithm in the gear.  
-   
+   * `manifest.json`   - Describes critical properties of how the gear computes.
+   * `run`             - Describes how to execute the algorithm in the gear.
+
 The contents of these files are described here.
 
 ## The manifest
@@ -25,7 +25,7 @@ The contents of these files are described here.
 Here's an example manifest.json that specifies a Flywheel gear which reads one dicom file as input and specifies one configuration parameter. The keys listed in this example are all required, unless marked otherwise.
 
 For other restrictions and required fields, you can view our [manifest schema](manifest.schema.json).<br>
-This document is a [JSON schema](http://json-schema.org), which allows for automatic validation of structured documents. 
+This document is a [JSON schema](http://json-schema.org), which allows for automatic validation of structured documents.
 
 Note, the `// comments` shown below are not JSON syntax and cannot be included in a real manifest file.
 ```javascript
@@ -52,11 +52,11 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
 	"license": "Apache-2.0",
 
-	// Where to go to learn more about the gear
-	"url":     "http://example.com",
+	// Where to go to learn more about the gear. You can leave this blank.
+	"url":     "http://example.example",
 
-	// Where to go for the source code, if applicable. Can be the same as the above url.
-	"source":  "http://example.com/code",
+	// Where to go for the source code, if applicable. You can leave this blank.
+	"source":  "http://example.example/code",
 
 	// Options that the gear can use
 	"config": {
@@ -91,9 +91,9 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 ### Manifest inputs
 
 Each key of `inputs` specifies an input to the gear.<br>
-At this point, the inputs are always files and the `"base": "file"` is part of the specification. 
+At this point, the inputs are always files and the `"base": "file"` is part of the specification.
 
-Further constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice. In the example above, we add a constraint describing the `type` of file. File types will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only). 
+Further constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice. In the example above, we add a constraint describing the `type` of file. File types will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only).
 
 The example has named one input, called "dicom", and requests that the file's type be dicom.
 
