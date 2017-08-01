@@ -4,14 +4,25 @@
 
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"type": "object",
+
 	"definitions": {
 		"directive": {
 			"oneOf": [
 				{"$ref": "http://json-schema.org/draft-04/schema"}
 			],
 			"description": "A schema directive."
+		},
+		"uriOrEmpty": {
+			"type": "string",
+			"maxLength": 1000,
+			"oneOf": [
+				{ "format": "uri" },
+				{ "maxLength": 0 }
+			],
+			"description": "A valid URI, or empty string."
 		}
 	},
+
 	"properties": {
 		"author": {
 			"type": "string",
@@ -84,16 +95,12 @@
 			"description": "The identification of this gear."
 		},
 		"source": {
-			"type": "string",
-			"format": "uri",
-			"maxLength": 1000,
-			"description": "The URL where the source code of this gear can be found."
+			"$ref": "#/definitions/uriOrEmpty",
+			"description": "The URL where the source code of this gear can be found. Leave blank if none."
 		},
 		"url": {
-			"type": "string",
-			"format": "uri",
-			"maxLength": 1000,
-			"description": "The URL where more information about this gear can be found. Can be the same as the source URL."
+			"$ref": "#/definitions/uriOrEmpty",
+			"description": "The URL where more information about this gear can be found. Leave blank if none."
 		},
 		"version": {
 			"type": "string",

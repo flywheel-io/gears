@@ -1,4 +1,4 @@
-# Flywheel Gear Spec (v0.1)
+# Flywheel Gear Spec (v0.1.1)
 
 This document describes the structure of a Flywheel Gear.
 
@@ -52,11 +52,11 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
 	"license": "Apache-2.0",
 
-	// Where to go to learn more about the gear
-	"url":     "http://example.com",
+	// Where to go to learn more about the gear. You can leave this blank.
+	"url":     "http://example.example",
 
-	// Where to go for the source code, if applicable. Can be the same as the above url.
-	"source":  "http://example.com/code",
+	// Where to go for the source code, if applicable. You can leave this blank.
+	"source":  "http://example.example/code",
 
 	// Options that the gear can use
 	"config": {
