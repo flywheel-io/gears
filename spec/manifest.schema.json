@@ -15,7 +15,7 @@
 		"uriOrEmpty": {
 			"type": "string",
 			"maxLength": 1000,
-			"oneOf": [
+			"anyOf": [
 				{ "format": "uri" },
 				{ "maxLength": 0 }
 			],
