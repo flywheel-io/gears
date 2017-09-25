@@ -13,10 +13,10 @@ This tar file can be created from most common container tools (e.g., Docker).
 To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.<br>
 All following references to folders are relative to this folder.
 
-The `/flywheel/v0` folder must contain two specific files
+The `/flywheel/v0` folder contains two specific files:
 
    * `manifest.json`   - Describes critical properties of how the gear computes.
-   * `run`             - Describes how to execute the algorithm in the gear.
+   * `run` - (Optional) Describes how to execute the algorithm in the gear. Alternately, use the manifest `command` key.
 
 The contents of these files are described here.
 
@@ -53,21 +53,44 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	"license": "Apache-2.0",
 
 	// Where to go to learn more about the gear. You can leave this blank.
-	"url":     "http://example.example",
+	"url": "http://example.example",
 
 	// Where to go for the source code, if applicable. You can leave this blank.
 	"source":  "http://example.example/code",
+
+	// (Optional) Environment variables to set for the gear.
+	"environment": {
+
+	},
+
+	// (Optional) Command to execute. Ran inside a bash shell.
+	"environment": "python script.py"
 
 	// Options that the gear can use
 	"config": {
 
 		// A name for this option to show in the user interface
 		"speed": {
+			"type": "integer",
 
 			// (Optional) json-schema syntax to provide further guidance
-			"type": "integer",
 			"minimum": 0,
-			"maximum": 3
+			"maximum": 3,
+
+			"description": "How fast do you want the gear to run? Choose 0-3."
+		},
+
+		"coordinates": {
+			"type": "array",
+
+			"items": {
+				"type": "number",
+
+				"minItems": 3,
+				"maxItems": 3,
+			},
+
+			"description": "A set of 3D coordinates."
 		}
 	},
 
@@ -81,8 +104,9 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 			"base": "file",
 
 			// (Optional) json-schema syntax to provide further guidance
-			"type": { "enum": [ "dicom" ] }
+			"type": { "enum": [ "dicom" ] },
 
+			"description": "Any dicom file."
 		}
 	}
 }
@@ -101,9 +125,9 @@ The example has named one input, called "dicom", and requests that the file's ty
 
 Each key of `config` specifies a configuration option.
 
-Like the inputs, you can add JSON schema constraints as desired. There are no formal restrictions on `config` yet, but we request that you specify a `type` on each key. Please only use scalars: `string`, `integer`, `number`, `boolean`. It's likely these restrictions will be formalized & enforced in a future version of the spec.
+Like the inputs, you can add JSON schema constraints as desired. Please specify a `type` on each key. Please only use non-object types: `string`, `integer`, `number`, `boolean`.
 
-The example has named one config option, called "speed", which must be an integer between zero and three.
+The example has named one config option, called "speed", which must be an integer between zero and three, and another called "coordinates", which must be a set of three floats.
 
 ### The input folder
 
@@ -114,17 +138,42 @@ The full path would be, for example: `/flywheel/v0/input/dicom/my-data.dcm`.
 
 ### The input configuration
 
-If your gear has specified configuration, inside the `/flywheel/v0` folder a `config.json` file will be provided with any settings the user has provided. For example, if your gear uses the example manifest above, and the user sets `speed` to 2, you'd get a file like the following:
+Inside the `/flywheel/v0` folder a `config.json` file will be provided with any settings the user has provided, and information about provided files. For example, if your gear uses the example manifest above, you'd get a file like the following:
 
 ```javascript
 {
 	"config": {
-		"speed": 2
+		"speed": 2,
+		"coordinates": [1, 2, 3]
+	},
+	"inputs" : {
+		"dicom" : {
+			"base" : "file",
+			"hierarchy" : {
+				"type" : "acquisition",
+				"id" : "5988d38b3b49ee001bde0853"
+			},
+			"location" : {
+				"path" : "/flywheel/v0/input/dicom/example.dcm",
+				"name" : "example.dcm"
+			},
+			"object" : {
+				"info" : {},
+				"mimetype" : "application/octet-stream",
+				"tags" : [],
+				"measurements" : [],
+				"type" : "dicom",
+				"modality" : null,
+				"size" : 2913379
+			}
+		}
 	}
 }
 ```
 
-Each configuration key will have been checked server-side against any constraints you specified, so you can be assured that your gear will be provided valid values. In a future revision, this file will also hold information about the gear's input files.
+Each configuration key will have been checked server-side against any constraints you specified, so you can be assured that your gear will be provided valid values.
+
+The `inputs` key will hold useful information about the files. For example, you can use `inputs.dicom.path` to get the full path to the provided file. Also provided will be the location of the input in the hierarchy (if applicable) and any scientific information and metadata known at the time of the job creation. This `inputs` key will currently only be present when running on the Flywheel system.
 
 ### The output folder
 
@@ -164,12 +213,13 @@ If you are curious about the typical file types, you can find a list of them [he
 
 As you might expect, gears cannot produce "normal" files called `.metadata.json`, and might cause the gear to fail if the file is improperly formed.
 
-## The run script
+## The run target and environment
 
-The `run` file is `/flywheel/v0/run`.<br>
-The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
+By default, the gear is invoked by running is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
 
-The run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success or permanent failure, exit zero. On transient failure, exit non-zero.
+You can change this by setting the `command` key of the manifest.
+
+Whatever your run script, it is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success, exit zero. If the algorithm encounters a failure, exit non-zero. Ideally, print something out before exiting non-zero, so that your users can check the logs to see why things did not work.
 
 ### The environment for the run script
 
