@@ -64,7 +64,7 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	},
 
 	// (Optional) Command to execute. Ran inside a bash shell.
-	"environment": "python script.py"
+	"command": "python script.py"
 
 	// Options that the gear can use
 	"config": {
