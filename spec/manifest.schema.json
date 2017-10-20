@@ -50,6 +50,15 @@
 			"maxLength": 5000,
 			"description": "A brief description of the gear's purpose. Ideally 1-4 sentances."
 		},
+		"environment": {
+			"type": "object",
+			"additionalProperties": { "type": "string" },
+			"description": "Environment variables that should be set for the gear."
+		},
+		"command": {
+			"type": "string",
+			"description": "If provided, the starting command for the gear, rather than /flywheel/v0/run. Will be templated according to the spec."
+		},
 		"inputs": {
 			"type": "object",
 			"additionalProperties": {
@@ -57,8 +66,8 @@
 				"properties": {
 					"base": {
 						"type": "string",
-						"enum": [ "file" ],
-						"description": "The type of gear input. Currently only supports a file."
+						"enum": [ "file", "api-key" ],
+						"description": "The type of gear input."
 					},
 					"description": {
 						"type": "string",
