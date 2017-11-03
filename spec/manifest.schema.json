@@ -34,6 +34,11 @@
 			"maxLength": 100,
 			"description": "(optional) The maintainer of this gear. Can be used to distinguish the algorithm author from the gear maintainer."
 		},
+		"cite": {
+			"type": "string",
+			"maxLength": 5000,
+			"description": "(optional) Any citations relevant to the algorithm(s) or work present in the gear."
+		},
 		"config": {
 			"type": "object",
 			"additionalProperties": {
