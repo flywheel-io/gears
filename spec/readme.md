@@ -1,4 +1,4 @@
-# Flywheel Gear Spec (v0.1.3)
+# Flywheel Gear Spec (v0.1.4)
 
 This document describes the structure of a Flywheel Gear.
 
@@ -48,6 +48,9 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 	// (Optional) the maintainer, which may be distinct from the algorithm author.
 	// Can be the same as the author field if both roles were filled by the same individual.
 	"maintainer":  "Nathaniel Kofalt",
+
+	// (Optional) Any citations you wish to add.
+	"cite":  "",
 
 	// Must be an OSI-approved SPDX license string or 'Other'. Ref: https://spdx.org/licenses
 	"license": "Apache-2.0",
