@@ -10,7 +10,8 @@ This tar file can be created from most common container tools (e.g., Docker).
 
 ## The base folder
 
-To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.<br>
+To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.
+
 All following references to folders are relative to this folder.
 
 The `/flywheel/v0` folder contains two specific files:
@@ -24,7 +25,8 @@ The contents of these files are described here.
 
 Here's an example manifest.json that specifies a Flywheel gear which reads one dicom file as input and specifies one configuration parameter. The keys listed in this example are all required, unless marked otherwise.
 
-For other restrictions and required fields, you can view our [manifest schema](manifest.schema.json).<br>
+For other restrictions and required fields, you can view our [manifest schema](manifest.schema.json).
+
 This document is a [JSON schema](http://json-schema.org), which allows for automatic validation of structured documents.
 
 Note, the `// comments` shown below are not JSON syntax and cannot be included in a real manifest file.
@@ -117,7 +119,8 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 
 ### Manifest inputs
 
-Each key of `inputs` specifies an input to the gear.<br>
+Each key of `inputs` specifies an input to the gear.
+
 At this point, the inputs are always files and the `"base": "file"` is part of the specification.
 
 Further constraints are an advanced feature, so feel free to leave this off until you want to pursue it. When present, they will be used to guide the user to give them hints as to which files are probably the right choice. In the example above, we add a constraint describing the `type` of file. File types will be matched against our [file data model](https://github.com/scitran/core/wiki/Data-Model,-v2#file-subdocument-only).
@@ -218,20 +221,20 @@ As you might expect, gears cannot produce "normal" files called `.metadata.json`
 
 ## The run target and environment
 
-By default, the gear is invoked by running is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash script, a python function, or any other executable.
+By default, the gear is invoked by running is `/flywheel/v0/run`. The file must be executable (`chmod +x run`). It can be a bash or a Python script, or any other executable. If it is a script, please make sure to include appropriate shebang (`#!`) leading line.
 
 You can change this by setting the `command` key of the manifest.
 
-Whatever your run script, it is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success, exit zero. If the algorithm encounters a failure, exit non-zero. Ideally, print something out before exiting non-zero, so that your users can check the logs to see why things did not work.
+Your run script is the only entry point used for the gear and must accomplish everything the gear sets out to do. On success, exit zero. If the algorithm encounters a failure, exit non-zero. Ideally, print something out before exiting non-zero, so that your users can check the logs to see why things did not work.
 
 ### The environment for the run script
 
-An important consideration is the environment when the `run` command is executed.
+An important consideration is the environment where the `run` command is executed.
 The command will be executed in the folder containing it (`/flywheel/v0`), and with no environment variables save the `PATH`:
 
-````
+```
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-````
+```
 
 Any required environment and path variables should be specified within the script. This can be important if, for example, you're producing a gear from a Dockerfile, as the variables there will not transfer over. We typically specify the path and environment variables in a `.bashrc` file, and source that file at the beginning of the `run` script.
 
@@ -241,7 +244,8 @@ The file is also executed with no arguments. You must specify the inputs to the 
 
 At the current time, basic outbound networking may be available to the gear. This is not necessarily guaranteed, and may vary depending on your installation's setup. It is likely that this feature will become opt-in in a future version of the spec.
 
-Be sure to get in touch with us regarding your networking needs - Matlab license checks, for example.<br>
+Be sure to get in touch with us regarding your networking needs - Matlab license checks, for example.
+
 There are no current plans to allow inbound networking.
 
 ## Contact
