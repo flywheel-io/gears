@@ -8,6 +8,10 @@ A Flywheel gear is a tar file (.tar) of a container; the container must include 
 
 This tar file can be created from most common container tools (e.g., Docker).
 
+#### Minimum container requirements
+
+The only requirement for the underlying container is that it must be a \*nix system that provides a bash shell on the path.
+
 ## The base folder
 
 To be a Flywheel gear, the container in the tar file must include a folder named: `/flywheel/v0`.
