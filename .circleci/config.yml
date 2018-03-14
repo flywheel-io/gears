@@ -1,0 +1,27 @@
+version: 2
+
+jobs:
+    build:
+        working_directory: "~/gears"
+
+        docker:
+            - image: python:2-alpine3.7
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                key: gears-1-{{ checksum "setup.py"}}
+
+            - run:
+                name: Install Dependencies
+                command: pip install -e .
+
+            - save_cache:
+                key: gears-1-{{ checksum "setup.py"}}
+                paths:
+                    - "~/.cache/pip"
+
+            - run:
+                name: Validate
+                command: python validate.py
