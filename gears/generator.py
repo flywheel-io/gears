@@ -94,18 +94,46 @@ def derive_invocation_schema(manifest):
 	for kind in ['config', 'inputs']:
 		for key in manifest[kind]:
 			# Copy constraints, removing 'base' and 'description' keywords which are not constraints
-			val = copy.deepcopy(manifest[kind][key])
-			val.pop('base', None)
-			val.pop('description', None)
-			optional = val.pop('optional', False)
+			value = copy.deepcopy(manifest[kind][key])
+			value.pop('base', None)
+			value.pop('description', None)
+			optional = value.pop('optional', False)
 
 			# The config map holds scalars, while the inputs map holds objects.
 			if kind == 'config':
-				result['properties'][kind]['properties'][key] = val
+				result['properties'][kind]['properties'][key] = value
 			else:
-				result['properties'][kind]['properties'][key] = {}
-				result['properties'][kind]['properties'][key]['properties'] = val
-				result['properties'][kind]['properties'][key]['type'] = 'object'
+				keyType = manifest[kind][key]['base']
+				spec = {}
+
+				if keyType == 'file' or keyType == 'api-key':
+					# Object with any particular properties (could be refined further)
+					spec = {
+						'type': 'object',
+						'properties': value, # copy over schema snippet from manifest
+					}
+
+				elif keyType == 'context':
+					# Object with information about a lookup value
+					spec = {
+						'type':  'object',
+						'properties': {
+							'base': {
+								'type': 'string',
+							},
+							'found': {
+								'type': 'boolean',
+							},
+							'value': { }, # Context inputs can have any type, or none at all
+						},
+						'required': [ 'base', 'found', 'value' ]
+					}
+				else:
+					# Whitelist input types
+					raise Exception("Unknown input type " + str(keyType))
+
+				# Save into result
+				result['properties'][kind]['properties'][key] = spec
 
 			# Require the key be present unless optional flag is set.
 			if not optional:
@@ -165,3 +193,4 @@ def validate_invocation(manifest, invocation):
 
 	inv_schema = derive_invocation_schema(manifest)
 	jsonschema.validate(invocation, inv_schema)
+	return inv_schema

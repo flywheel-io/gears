@@ -100,10 +100,10 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 			},
 
 			"description": "A set of 3D coordinates."
-		}
+		},
 	},
 
-	// Inputs (files) that the gear consumes
+	// Inputs that the gear consumes
 	"inputs": {
 
 		// A label - describes one of the inputs. Used by the user interface and by the run script.
@@ -116,7 +116,13 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 			"type": { "enum": [ "dicom" ] },
 
 			"description": "Any dicom file."
-		}
+		},
+
+		// A contextual key-value, provided by the environment. Used for values that are generally the same for an entire project.
+		// Not guaranteed to be found - the gear should decide if it can continue to run, or exit with an error.
+		"matlab_license_code": {
+			"base": "context",
+		},
 	},
 
 	// Capabilities the gear requires. Not necessary unless you need a specific feature.
@@ -143,6 +149,16 @@ Each key of `config` specifies a configuration option.
 Like the inputs, you can add JSON schema constraints as desired. Please specify a `type` on each key. Please only use non-object types: `string`, `integer`, `number`, `boolean`.
 
 The example has named one config option, called "speed", which must be an integer between zero and three, and another called "coordinates", which must be a set of three floats.
+
+### Contextual values
+
+Context inputs are values that are generally provided by the environment, rather than the human or process running the gear. These are generally values that are incidentally required rather than directly a part of the algorithm - for example, a license key.
+
+It is up to the gear executor to decide how (and if) context is provided. In the Flywheel system, the values can be provided by setting a `context.key-name` value on a container's metadata. For example, you could set `context.matlab_license_code: "AEX"` on the project, and then any gear running in that project with a context input called `matlab_license_code` would receive the value.
+
+Unlike a gear's config values, contexts are not guaranteed to exist _or_ have a specific type or format. It is up to the gear to decide if it can continue, or exit with an error, when a context value does not match what the gear expects. In the example config file below, note that the `found` key can be checked to determine if a value was provided by the environment.
+
+Because context values are not namespaced, it is suggested that you use a specific and descriptive name. The `matlab_license_code` example is a good, self-explanatory key that many gears could likely reuse.
 
 ### The input folder
 
@@ -181,6 +197,12 @@ Inside the `/flywheel/v0` folder a `config.json` file will be provided with any 
 				"modality" : null,
 				"size" : 2913379
 			}
+		},
+
+		"matlab_license_code": {
+			"base": "context",
+			"found": true,
+			"value": "ABC"
 		}
 	}
 }
