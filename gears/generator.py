@@ -165,11 +165,3 @@ def validate_invocation(manifest, invocation):
 
 	inv_schema = derive_invocation_schema(manifest)
 	jsonschema.validate(invocation, inv_schema)
-
-
-def test(): # Can become a test case later :)
-	x = load_json_from_file(os.path.join(get_project_dir(), "manifest.example.json"))
-	validate_manifest(x)
-
-	y = load_json_from_file(os.path.join(get_project_dir(), "invocation.example.json"))
-	validate_invocation(x, y)
