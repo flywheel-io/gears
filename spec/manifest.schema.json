@@ -90,6 +90,13 @@
 			},
 			"description": "Schema snippets describing the inputs this gear consumes."
 		},
+		"capabilities": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"description": "A set of features the gear requires to run (for example, networking)."
+		},
 		"label": {
 			"type": "string",
 			"maxLength": 100,
