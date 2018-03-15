@@ -1,4 +1,4 @@
-# Flywheel Gear Spec (v0.1.4)
+# Flywheel Gear Spec (v0.1.5)
 
 This document describes the structure of a Flywheel Gear.
 
@@ -117,7 +117,12 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 
 			"description": "Any dicom file."
 		}
-	}
+	},
+
+	// Capabilities the gear requires. Not necessary unless you need a specific feature.
+	"capabilities": [
+		"networking"
+	],
 }
 ```
 
@@ -244,13 +249,27 @@ Any required environment and path variables should be specified within the scrip
 
 The file is also executed with no arguments. You must specify the inputs to the executables in the `run` script, such as the input file names or flags.
 
+### Capabilities
+
+Capabilities allow for a gear to require certain environmental feature support.
+
+Currently, the only capability available is `networking`, which requires basic outbound networking as described below.
+In the future, there will likely be more added: `cuda`, `hpc`, etc.
+
+Do not add speculative capabilities to your manifest.
+Executors that do not recognize or cannot provide a specified capability are forbidden from launching the job.
+
 ### Networking
 
-At the current time, basic outbound networking may be available to the gear. This is not necessarily guaranteed, and may vary depending on your installation's setup. It is likely that this feature will become opt-in in a future version of the spec.
+Some gears may require outbound networking (to contact the Flywheel API, or for some other purpose).
+If your gear needs this, please add the `networking` capability to your manifest as shown in the example above.
+
+For now, all gears are provided some networking, but this is not guaranteed, and may vary depending on your installation's setup.
+Adding the capability will future-proof your gear as it is likely this will be changed in the future.
 
 Be sure to get in touch with us regarding your networking needs - Matlab license checks, for example.
 
-There are no current plans to allow inbound networking.
+There are no plans to allow inbound networking.
 
 ## Contact
 

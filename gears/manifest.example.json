@@ -20,5 +20,8 @@
 			"type": { "enum": [ "dicom" ] }
 
 		}
-	}
+	},
+	"capabilities": [
+		"networking"
+	]
 }
