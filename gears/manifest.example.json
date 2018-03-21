@@ -19,6 +19,9 @@
 			"base": "file",
 			"type": { "enum": [ "dicom" ] }
 
+		},
+		"matlab_license_code": {
+			"base": "context"
 		}
 	},
 	"capabilities": [

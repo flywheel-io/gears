@@ -71,7 +71,7 @@
 				"properties": {
 					"base": {
 						"type": "string",
-						"enum": [ "file", "api-key" ],
+						"enum": [ "file", "api-key", "context" ],
 						"description": "The type of gear input."
 					},
 					"description": {

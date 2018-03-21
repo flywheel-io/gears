@@ -5,6 +5,11 @@
 	"inputs": {
 		"dicom": {
 			"type": "dicom"
+		},
+		"matlab_license_code": {
+			"base": "context",
+			"found": true,
+			"value": "ABC"
 		}
 	}
 }
