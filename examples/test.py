@@ -57,7 +57,6 @@ def test_wrap(name, folder, shouldpass):
 
 def test_folders():
 	base = path.dirname(path.abspath(__file__))
-	print base
 
 	for f in listdir(base):
 		file = path.join(base, f)
