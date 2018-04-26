@@ -51,7 +51,6 @@
 			"additionalProperties": {
 				"$ref": "#/definitions/config-directive"
 			},
-			"not": { "required": ["g"]},
 			"description": "Schema snippets describing the options this gear consumes. Not currently processed."
 		},
 		"custom": {
