@@ -1,4 +1,4 @@
-# Flywheel Gear Spec (v0.1.5)
+# Flywheel Gear Spec (v0.1.6)
 
 This document describes the structure of a Flywheel Gear.
 
@@ -149,6 +149,8 @@ Each key of `config` specifies a configuration option.
 Like the inputs, you can add JSON schema constraints as desired. Please specify a `type` on each key. Please only use non-object types: `string`, `integer`, `number`, `boolean`.
 
 The example has named one config option, called "speed", which must be an integer between zero and three, and another called "coordinates", which must be a set of three floats.
+
+In some cases, a configuration option may not have a safe default, and it only makes sense to sometimes omit it entirely. If that is the case, specify `"optional": true` on that config key.
 
 ### Contextual values
 

@@ -12,6 +12,13 @@
 			],
 			"description": "A schema directive."
 		},
+		"config-directive": {
+			"allOf": [
+				{"$ref": "http://json-schema.org/draft-04/schema"},
+				{ "not": {"required": ["default", "optional"]} }
+			],
+			"description": "A config schema directive."
+		},
 		"uriOrEmpty": {
 			"type": "string",
 			"maxLength": 1000,
@@ -42,7 +49,7 @@
 		"config": {
 			"type": "object",
 			"additionalProperties": {
-				"$ref": "#/definitions/directive"
+				"$ref": "#/definitions/config-directive"
 			},
 			"description": "Schema snippets describing the options this gear consumes. Not currently processed."
 		},
@@ -101,6 +108,12 @@
 			"type": "string",
 			"maxLength": 100,
 			"description": "The human-friendly name of this gear."
+		},
+		"capabilities": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
 		},
 		"license": {
 			"type": "string",
