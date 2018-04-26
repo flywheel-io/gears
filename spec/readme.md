@@ -150,6 +150,8 @@ Like the inputs, you can add JSON schema constraints as desired. Please specify 
 
 The example has named one config option, called "speed", which must be an integer between zero and three, and another called "coordinates", which must be a set of three floats.
 
+In some cases, a configuration option may not have a safe default, and it only makes sense to sometimes omit it entirely. If that is the case, specify `"optional": "true"` on that config key.
+
 ### Contextual values
 
 Context inputs are values that are generally provided by the environment, rather than the human or process running the gear. These are generally values that are incidentally required rather than directly a part of the algorithm - for example, a license key.

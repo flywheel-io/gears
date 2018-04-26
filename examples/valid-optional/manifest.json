@@ -1,0 +1,28 @@
+{
+	"name": "example-gear",
+	"label": "Example Gear",
+	"description": "A gear that performs a task.",
+	"version": "1.0",
+	"author":  "Flywheel",
+	"license": "Apache-2.0",
+	"url":     "http://example.com",
+	"source":  "http://example.com/code",
+	"config": {
+		"speed": {
+			"type": "integer",
+			"minimum": 0,
+			"maximum": 3
+		},
+		"special": {
+			"type": "integer",
+			"optional": true
+		}
+	},
+	"inputs": {
+		"dicom": {
+			"base": "file",
+			"type": { "enum": [ "dicom" ] }
+
+		}
+	}
+}
