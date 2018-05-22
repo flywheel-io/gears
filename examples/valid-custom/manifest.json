@@ -1,0 +1,24 @@
+{
+	"name": "example-gear",
+	"label": "Example Gear",
+	"description": "A gear that performs a task.",
+	"version": "1.0",
+	"author":  "Flywheel",
+	"license": "Apache-2.0",
+	"url":     "http://example.com",
+	"source":  "http://example.com/code",
+	"config": {
+	},
+	"inputs": {
+	},
+	"custom": {
+		"generator": {
+			"generated-via": "antlr",
+			"credit": "Terence Parr",
+			"version": 4
+		},
+		"flywheel": {
+			"suite": "FSL 5.0.10"
+		}
+	}
+}
