@@ -295,6 +295,45 @@ Be sure to get in touch with us regarding your networking needs - Matlab license
 
 There are no plans to allow inbound networking.
 
+### Custom information
+
+There is a final manifest key, `custom`, that is entirely freeform. If you have additional information you'd like to record about your gear - possibly as a result of some toolchain or wrapper - this is a great place to put it.
+
+An example:
+
+```javascript
+{
+	"name": "gear-with-custom-info",
+
+	// ...
+
+	"custom": {
+
+		"generator": {
+			"generated-via": "antlr",
+			"credit": "Terence Parr",
+			"version": 4
+		}
+	}
+```
+
+In general, try to place your information under a single, top-level key, as in the example above.
+
+#### Reserved custom keys
+
+We use some custom keys for notekeeping, or to enable features that might change in the future. In this way, we can offer functionality without the more onerous process of standardizing it & supporting in perpetuity.
+
+In general, avoid using the custom keys `custom.flywheel` or `custom.gear-builder`. Here's a full list:
+
+* `custom`
+  * `docker-image`: This is used to tell the [exchange](https://github.com/flywheel-io/exchange) what docker image to pull and archive.
+  * `flywheel`
+    * `invalid`: This disables a gear from running entirely (ref [Queue.enqueue_job](https://github.com/flywheel-io/core/blob/81216ca5fa1ccd0fd4685f0bfc9e1a3799a6b96b/api/jobs/queue.py#L161-L162)). Avoid using.
+    * `suite`: This identifies a gear as part of a larger suite of tools, such as "FSL 5.0.10".
+  * `gear-builder`
+    * `image`: The docker image to use as a base for the gear builder, if applicable.
+    * `container`: The docker container to use as a base for the gear builder, if applicable.
+
 ## Contact
 
 Please don't hesitate to contact us with questions or comments about the spec at support@flywheel.io !
