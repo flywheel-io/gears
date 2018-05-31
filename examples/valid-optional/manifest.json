@@ -8,21 +8,28 @@
 	"url":     "http://example.com",
 	"source":  "http://example.com/code",
 	"config": {
-		"speed": {
-			"type": "integer",
-			"minimum": 0,
-			"maximum": 3
+		"str": {
+			"type": "string",
+			"optional": true
 		},
-		"special": {
+		"int": {
 			"type": "integer",
+			"optional": true
+		},
+		"num": {
+			"type": "number",
+			"optional": true
+		},
+		"bool": {
+			"type": "boolean",
 			"optional": true
 		}
 	},
 	"inputs": {
 		"dicom": {
 			"base": "file",
-			"type": { "enum": [ "dicom" ] }
-
+			"type": { "enum": [ "dicom" ] },
+			"optional": true
 		}
 	}
 }
