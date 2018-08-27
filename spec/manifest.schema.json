@@ -71,32 +71,88 @@
 			"type": "string",
 			"description": "If provided, the starting command for the gear, rather than /flywheel/v0/run. Will be templated according to the spec."
 		},
+
 		"inputs": {
 			"type": "object",
+
 			"additionalProperties": {
-				"type": "object",
-				"properties": {
-					"base": {
-						"type": "string",
-						"enum": [ "file", "api-key", "context" ],
-						"description": "The type of gear input."
+				"anyOf": [
+
+					{
+						"type": "object",
+						"properties": {
+							"base": {
+								"type": "string",
+								"enum": [ "file" ],
+								"description": "The type of gear input."
+							},
+							"description": {
+								"type": "string",
+								"description": "Hackaround for description not technically being a schema directive"
+							},
+							"optional": {
+								"type": "boolean",
+								"description": "Allow the gear to mark an input file as optional."
+							}
+						},
+						"required": ["base"],
+						"additionalProperties": {
+							"$ref": "#/definitions/directive"
+						},
+
+						"description": "A file input, optionally using schema snippets to further refine the type of file taken."
 					},
-					"description": {
-						"type": "string",
-						"description": "Hackaround for description not technically being a schema directive"
+
+					{
+
+						"type": "object",
+						"properties": {
+							"base": {
+								"type": "string",
+								"enum": [ "context" ],
+								"description": "The type of gear input."
+							},
+							"description": {
+								"type": "string",
+								"description": "Hackaround for description not technically being a schema directive"
+							}
+						},
+						"required": ["base"],
+						"additionalProperties": {
+							"$ref": "#/definitions/directive"
+						},
+
+						"description": "A contextual input, retrieved from the environment on launch."
 					},
-					"optional": {
-						"type": "boolean",
-						"description": "Allow the gear to mark an input file as optional."
+
+					{
+						"type": "object",
+						"properties": {
+							"base": {
+								"type": "string",
+								"enum": [ "api-key" ],
+								"description": "The type of gear input."
+							},
+							"description": {
+								"type": "string",
+								"description": "Hackaround for description not technically being a schema directive"
+							},
+							"read-only": {
+								"type": "boolean",
+								"description": "Requests that the provisioned API key be only allowed read access."
+							}
+						},
+						"required": ["base"],
+						"additionalProperties": false,
+
+						"description": "An api-key input for accessing data with an SDK."
 					}
-				},
-				"required": ["base"],
-				"additionalProperties": {
-					"$ref": "#/definitions/directive"
-				}
+				]
 			},
+
 			"description": "Schema snippets describing the inputs this gear consumes."
 		},
+
 		"capabilities": {
 			"type": "array",
 			"items": {

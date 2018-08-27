@@ -10,6 +10,10 @@
 			"base": "context",
 			"found": true,
 			"value": "ABC"
+		},
+		"sdk": {
+			"base": "api-key",
+			"key": "aex"
 		}
 	}
 }
