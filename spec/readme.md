@@ -178,7 +178,7 @@ It is possible to interact with the Flywheel data hierarchy using our [python](h
 
 Generally, you will want to figure out a script that you like, using your normal user API key, before turning it into a gear. To do this, specify an `api-key` type input as show in the example above, and use that value in your gear script.
 
-The key provided will be a special key that has the same access as the running user (not necessarily the gear author), and only work while the job is running. After the job completes, the key is retired.
+The key provided will be a special key that has the same access as the running user (not necessarily the gear author), and only work while the job is running. After the job completes, the key is retired. This has write access by default, but you can make it read only by adding `"read-only": true` to the manifest as shown above.
 
 ### The input folder
 
