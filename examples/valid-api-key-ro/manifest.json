@@ -8,23 +8,11 @@
 	"url":     "http://example.com",
 	"source":  "http://example.com/code",
 	"config": {
-		"speed": {
-			"type": "integer",
-			"minimum": 0,
-			"maximum": 3
-		}
 	},
 	"inputs": {
-		"dicom": {
-			"base": "file",
-			"type": { "enum": [ "dicom" ] }
-
-		},
-		"matlab_license_code": {
-			"base": "context"
-		},
-		"sdk": {
-			"base": "api-key"
+		"key": {
+			"base": "api-key",
+			"read-only": true
 		}
 	},
 	"capabilities": [

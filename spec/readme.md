@@ -1,4 +1,4 @@
-# Flywheel Gear Spec (v0.1.6)
+# Flywheel Gear Spec (v0.1.7)
 
 This document describes the structure of a Flywheel Gear.
 
@@ -123,6 +123,15 @@ Note, the `// comments` shown below are not JSON syntax and cannot be included i
 		"matlab_license_code": {
 			"base": "context",
 		},
+
+		// An API key, specific to this job, with the same access as the user that launched the gear.
+		// Useful for aggregations, integrating with an external system, data analysis, or other automated tasks.
+		"key": {
+			"base": "api-key",
+
+			// (Optional) request that the API key only be allowed read access.
+			"read-only": true
+		}
 	},
 
 	// Capabilities the gear requires. Not necessary unless you need a specific feature.
@@ -161,6 +170,15 @@ It is up to the gear executor to decide how (and if) context is provided. In the
 Unlike a gear's config values, contexts are not guaranteed to exist _or_ have a specific type or format. It is up to the gear to decide if it can continue, or exit with an error, when a context value does not match what the gear expects. In the example config file below, note that the `found` key can be checked to determine if a value was provided by the environment.
 
 Because context values are not namespaced, it is suggested that you use a specific and descriptive name. The `matlab_license_code` example is a good, self-explanatory key that many gears could likely reuse.
+
+
+### API keys
+
+It is possible to interact with the Flywheel data hierarchy using our [python](https://flywheel-io.github.io/core/branches/master/python/getting_started.html), [matlab](https://flywheel-io.github.io/core/branches/master/matlab/getting_started.html), and (slated for an overhaul) [golang](https://github.com/flywheel-io/sdk) SDKs.
+
+Generally, you will want to figure out a script that you like, using your normal user API key, before turning it into a gear. To do this, specify an `api-key` type input as show in the example above, and use that value in your gear script.
+
+The key provided will be a special key that has the same access as the running user (not necessarily the gear author), and only work while the job is running. After the job completes, the key is retired. This has write access by default, but you can make it read only by adding `"read-only": true` to the manifest as shown above.
 
 ### The input folder
 
