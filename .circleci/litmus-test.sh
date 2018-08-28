@@ -2,8 +2,6 @@
 set -euo pipefail
 set -x
 
-pwd
-
 # Working directory
 rm -rf temp; mkdir -p temp; cd temp
 
@@ -22,3 +20,5 @@ find $folder/ -type f -name '*.json' | wc -l
 # Run test
 ../examples/test.py custom ./$folder
 
+# Cleanup
+cd ..; rm -rf temp
