@@ -106,11 +106,19 @@ def derive_invocation_schema(manifest):
 				keyType = manifest[kind][key]['base']
 				spec = {}
 
-				if keyType == 'file' or keyType == 'api-key':
-					# Object with any particular properties (could be refined further)
+				if keyType == 'file':
+					# Object with any particular properties suggested from the manifest
+					# Does not validate the upstream file object schema; that is left to other tools.
 					spec = {
 						'type': 'object',
 						'properties': value, # copy over schema snippet from manifest
+					}
+
+				elif keyType == 'api-key':
+					# There is currently only an implicit declaration of how api-key type inputs are provisioned.
+					# For now, declare an object. Should be improved later.
+					spec = {
+						'type': 'object'
 					}
 
 				elif keyType == 'context':
