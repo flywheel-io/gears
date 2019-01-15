@@ -1,4 +1,4 @@
-# Flywheel Gear Spec (v0.1.8)
+# Flywheel Gear Spec (v0.1.9)
 
 This document describes the structure of a Flywheel Gear.
 

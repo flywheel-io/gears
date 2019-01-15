@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 
 import argparse
 from os import sys, path, listdir, walk
@@ -51,19 +52,19 @@ def run_test_wrap(name, manifest, invocation, shouldpass):
 	try:
 		run_test(name, manifest, invocation)
 		if shouldpass:
-			print '[X]'
+			print('[X]')
 			return
 
 	except jsonschema.exceptions.ValidationError as ex:
 
 		if shouldpass:
-			print '[ ]'
+			print('[ ]')
 			raise ex
 		else:
-			print '[X]'
+			print('[X]')
 			return
 
-	print '[ ]'
+	print('[ ]')
 	raise Exception('Test should fail but did not: ' + name)
 
 def run_validation_suite(args):
