@@ -1,3 +1,4 @@
+from __future__ import print_function
 import argparse
 import json
 import sys
@@ -12,4 +13,4 @@ args = arg_parser.parse_args(sys.argv[1:] or ['--help'])
 
 manifest = generator.load_json_from_file(args.manifest)
 
-print json.dumps(generator.derive_invocation_schema(manifest))
+print(json.dumps(generator.derive_invocation_schema(manifest)))
