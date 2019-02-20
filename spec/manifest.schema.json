@@ -163,12 +163,6 @@
 			"maxLength": 100,
 			"description": "The human-friendly name of this gear."
 		},
-		"capabilities": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		},
 		"license": {
 			"type": "string",
 			"enum": [
