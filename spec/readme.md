@@ -264,7 +264,7 @@ Optionally, a gear can provide metadata about the files it produces. This is com
 }
 ```
 
-If you are familiar with [JSON schema](http://json-schema.org) you can look at our metadata schema [here](https://github.com/scitran/core/blob/master/api/schemas/input/enginemetadata.json) and our related file schema [here](https://github.com/scitran/core/blob/master/api/schemas/input/file.json). In this example, the file `example.nii.gz` (which must exist in the output folder) is specified as being a nifti file from an MRI machine, with a few custom key/value pairs.
+If you are familiar with [JSON schema](http://json-schema.org) you can look at our metadata schema [here](https://github.com/scitran/core/blob/master/swagger/schemas/input/enginemetadata.json) and our related file schema [here](https://github.com/scitran/core/blob/master/swagger/schemas/input/file.json). In this example, the file `example.nii.gz` (which must exist in the output folder) is specified as being a nifti file from an MRI machine, with a few custom key/value pairs.
 
 If you are curious about the typical file types, you can find a list of them [here](https://github.com/scitran/core/blob/d4da9eb299db9a7c6c27bdee1032d36db7cef919/api/files.py#L245-L269). You can also set metadata on the acquisition itself or its parent containers, though these features are less-used; see the metadata schema for more details.
 
