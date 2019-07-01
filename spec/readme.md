@@ -347,6 +347,7 @@ In general, avoid using the custom keys `custom.flywheel` or `custom.gear-builde
   * `docker-image`: This is used to tell the [exchange](https://github.com/flywheel-io/exchange) what docker image to pull and archive.
   * `flywheel`
     * `invalid`: This disables a gear from running entirely (ref [Queue.enqueue_job](https://github.com/flywheel-io/core/blob/81216ca5fa1ccd0fd4685f0bfc9e1a3799a6b96b/api/jobs/queue.py#L161-L162)). Avoid using.
+    * `module`: Requests a specific module to execute this gear. Currently only `runsc` is respected; all other values are ignored.
     * `suite`: This identifies a gear as part of a larger suite of tools, such as "FSL 5.0.10".
   * `gear-builder`
     * `image`: The docker image to use as a base for the gear builder, if applicable.
