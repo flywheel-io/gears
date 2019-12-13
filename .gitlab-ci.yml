@@ -9,5 +9,6 @@ variables:
 
 test:litmus-test:
   extends: .python
+  stage: test
   script:
     - .gitlab/litmus-test.sh
