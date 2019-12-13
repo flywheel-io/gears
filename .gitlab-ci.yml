@@ -9,7 +9,7 @@ variables:
   PYTEST: "false"
 
 test:litmus-test:
-  extends: .python3
+  extends: .python
   script:
     - .gitlab/litmus-test.sh
 
