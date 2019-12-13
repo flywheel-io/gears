@@ -11,4 +11,3 @@ test:litmus-test:
   extends: .python
   script:
     - .gitlab/litmus-test.sh
-
