@@ -1,0 +1,15 @@
+include:
+  - project: flywheel-io/infrastructure/ci-templates
+    ref: python3
+    file: python3.yml
+
+variables:
+  PYLINT: "false"
+  PYPI: "false"
+  PYTEST: "false"
+
+test:litmus-test:
+  extends: .python3
+  script:
+    - .gitlab/litmus-test.sh
+
